@@ -1,0 +1,30 @@
+# Compose file to simplify the build process of the Docker image for this service.
+version: "2.1"
+networks:
+  demo-network:
+services:
+  couchbase:
+    build:
+      context: ../couchbase
+    ports:
+      - "8091:8091"
+    networks:
+      - demo-network
+  spring-boot-couchbase-demo:
+    image: spring-boot/couchbase/demo:latest
+    depends_on:
+      couchbase:
+        condition: service_started
+    ports:
+      - "8080:8080"
+    networks:
+      - demo-network
+    entrypoint:
+      - java
+      - -Dspring.data.couchbase.connection-string=couchbase://couchbase
+      - -Dspring.data.couchbase.bucket-name=demoDockerBucket
+      - -Dspring.data.couchbase.user-name=demoUser
+      - -Dspring.data.couchbase.password=demoPass
+      - -cp
+      - app:app/lib/*
+      - com.tutorial.couchbase.demo.CouchbaseCacheProviderApplication

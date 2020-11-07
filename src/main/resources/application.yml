@@ -1,0 +1,20 @@
+management.endpoints.web.exposure.include: "*"
+server:
+  servlet:
+    context-path: /spring-boot-couchbase-demo
+
+spring:
+  data:
+    couchbase:
+      # Below is default couchbase installation on local dev machine
+      connection-string: 'couchbase://localhost'
+      bucket-name: 'default'
+      user-name: 'Administrator'
+      password: 'password'
+      expiryDuration: 'PT1H'
+
+#couchbase
+com:
+  couchbase:
+    kvTimeout: 1000
+    kvThreshold: 50
