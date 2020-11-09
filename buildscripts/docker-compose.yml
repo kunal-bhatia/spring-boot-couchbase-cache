@@ -14,7 +14,7 @@ services:
     image: spring-boot/couchbase/demo:latest
     depends_on:
       couchbase:
-        condition: service_started
+        condition: service_healthy
     ports:
       - "8080:8080"
     networks:
